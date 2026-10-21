@@ -1,0 +1,55 @@
+{
+  "name": "@silentforfar/dsh-side-task",
+  "version": "0.1.0",
+  "description": "Side task: a temporary chat session opened in the right sidebar, in the same workspace but with its own context.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Silentforfar",
+  "homepage": "https://github.com/Silentforfar/dsh-side-task#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Silentforfar/dsh-side-task.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Silentforfar/dsh-side-task/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "dsh-bundle",
+    "session",
+    "sidebar",
+    "side-task",
+    "parallel"
+  ],
+  "engines": {
+    "dsh": ">=0.2.1-rc.2"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-sidebar-right",
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ]
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Side task",
+    "description": "Open a temporary chat session in the right sidebar; it runs in parallel in the same workspace, with its own context."
+  }
+}

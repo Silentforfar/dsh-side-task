@@ -1,0 +1,3 @@
+- insert:
+    - id: side-task
+      name: '@silentforfar/dsh-side-task'
