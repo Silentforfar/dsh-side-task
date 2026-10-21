@@ -1,6 +1,6 @@
 {
   "name": "@silentforfar/dsh-side-task",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Side task: a temporary chat session opened in the right sidebar, in the same workspace but with its own context.",
   "type": "module",
   "license": "MIT",

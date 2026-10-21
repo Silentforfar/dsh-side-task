@@ -27,7 +27,7 @@ git+https://github.com/Silentforfar/dsh-side-task.git#<commit-sha>
 
 Use a full 40-character commit SHA from this repository's history so the install stays pinned and reproducible.
 
-**Requirements.** DSH 0.2.1-rc.2 or newer with the Web UI. Closing the tab releases the view; the session itself stays in the session list, and removing it remains the explicit "permanent delete" action.
+**Requirements.** DSH 0.2.1-rc.2 or newer with the Web UI. Closing the tab only closes the view; the session stays in the workspace, stays hidden from the main session list while it is mapped, and can be reopened from the same guide card. Removing it remains the explicit "permanent delete" action.
 
 **License.** MIT. The rest of this README documents the plugin in Chinese.
 
@@ -37,13 +37,15 @@ Use a full 40-character commit SHA from this repository's history so the install
 
 ## 用法
 
-- 在会话头部点 **侧边任务** 按钮（分栏图标），右栏新开一个标签，里面是一个空白会话；工作目录沿用它所在的会话。
-- 右栏用的是 DSH 自带的会话视图，模型选择、工具、权限都按当前配置走，两个会话可以同时跑，互不打断。
-- 关掉标签页只是关掉视图：会话本身留在侧边列表里，不会被静默删除；要清理就走会话菜单里的"永久删除"。
+- 展开右侧栏，在引导页点 **侧边任务** 卡片。插件会在同一工作区创建一个空白会话，并在右栏打开它的标签。
+- 标签里复用 DSH 自带的会话视图，模型选择、工具、权限都按当前配置走；主任务和侧边任务可以同时运行，互不打断。
+- 每个主会话对应一个侧边任务。关掉标签只是关掉视图，会话不会被删除；再点同一张卡片会重新打开它。
+- 已映射的侧边会话会从左侧会话列表隐藏，避免和主任务混在一起；要彻底清理，仍走会话菜单里的"永久删除"。
 
 ## 实现
 
-- `client.js` 在 `sidebar.right.pane.tab` 槽位注册一个标签类型（`dsh-resource://sidetask/session/<id>`），并用资源提供者在标签存活期间 retain 该会话，标签关闭时 release。
-- 标签内容直接复用 `sidebar.chat.conversation` 这个内置席位。
+- `client.js` 通过 `ctx.sidebarRightTabs.register` 注册页面型标签 `@silentforfar/dsh-side-task/sidetask`，并贡献右栏引导页的"侧边任务"卡片。
+- 标签体在 `sidebar.right.pane.tab` 槽位注册，内容复用内置的 `sidebar.chat.conversation` 会话席位；插件不再重复占用这个单占位槽。
+- 主会话与侧边会话的映射存在 `localStorage`（`dsh-side-task.mapping.v2`），并按映射把侧边会话行从左侧列表隐藏。
 - `index.js` 是空的 Host 半边：这个插件的全部贡献都在浏览器端。
 - `locale/*.json` 给 Plugins 页提供标题与描述。
